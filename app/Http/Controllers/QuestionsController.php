@@ -43,9 +43,14 @@ class QuestionsController extends Controller
      */
     public function store(Request $request, $id)
     {
+      
       try {
         // IDをもとにquestionsテーブルの情報取得
         $question = Question::where('id', $id)->first();
+        
+        if (!$question) {
+          return view('');
+        }
         // user_answersテーブルに情報を登録を宣言
         $user_answer = new UserAnswer();        // ユーザIDを１に固定
 
@@ -60,11 +65,8 @@ class QuestionsController extends Controller
         Log::error($ex);
         DB::rollBack();
       }
-      $last_q = Question::where('id', $id)->orderBy('id', 'desc')->take(1)->get();
-      $base = 2;
-      $next = Product::where('id', '>', $base)->orderBy('id')->limit('1')->first();
-      redirect('/question/'.$id)->with('question', $question);
-        //
+      
+      return view('questions.question')->with('question', $question);
     }
 
     /**
