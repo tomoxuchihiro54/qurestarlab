@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Question;
 use App\QuestionChoice;
 use App\UserAnswer;
+use App\UserAnswerDetail;
 use DB;
 
 class QuestionsController extends Controller
@@ -17,11 +18,18 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // 各問題を表示
+    // 最初の問題を表示
     public function index($id = 1)
     {
+      try {
+        $user_ans = new UserAnswer();
+        $user_ans->user_id = 1;
+        $user_ans->save();
+      } catch (Exception $ex) {
+        Session::flash('flash_message', 'データベースエラー');
+      }
       // questionテーブルの最初のレコードを取得
-      $question = Question::where('id', $id)->first();
+      $question = Question::findOrFail($id);
       return view('questions.question')->with('question', $question);
     }
 
@@ -46,24 +54,30 @@ class QuestionsController extends Controller
       
       try {
         // IDをもとにquestionsテーブルの情報取得
-        $question = Question::where('id', $id)->first();
+        $question = Question::findOrFail($id);
+        // 現在表示されている問題のIDをもとにquestionsテーブルの情報取得
+        $now_question = Question::Where('id', '<', $id)->orderBy('id', 'desc')->limit('1')->first();
         
+        // idがない場合は結果ページへ
         if (!$question) {
-          return view('');
+          return view('questions.result');
         }
-        // user_answersテーブルに情報を登録を宣言
-        $user_answer = new UserAnswer();        // ユーザIDを１に固定
-
-        $user_answer->user_id = 1;
-        // 問題番号
-        $user_answer->question_id = $question->id;
-        // 解答結果
-        $user_answer->correct_flag = $request->correct_flag;
-        // user_answerテーブルに情報を登録
-        $user_answer->save();
+        
+        // 最新のIDをもとにユーザアンサーテーブルの情報取得
+        $new_user_ans = UserAnswer::orderBy('id', 'desc')->limit(1)->first();
+        // user_answers_detailsテーブルに情報を登録を宣言
+        $user_ans_det = new UserAnswerDetail();        // ユーザIDを１に固定
+        // ユーザー解答ID
+        $user_ans_det->user_answer_id = $new_user_ans->id;
+        // 問題ID
+        $user_ans_det->question_id = $now_question->id;
+        // 正解フラグ
+        $user_ans_det->correct_flag = $request->correct_flag;
+        // user_answers_detailsテーブルに情報を登録
+        $user_ans_det->save();
+        
       } catch (Exception $ex) {
-        Log::error($ex);
-        DB::rollBack();
+        Session::flash('flash_message', 'データベースエラー');
       }
       
       return view('questions.question')->with('question', $question);

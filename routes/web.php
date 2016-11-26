@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 // 最初の１問
 Route::get('/question/{id?}', 'QuestionsController@index');
-Route::post('/question/{id}', 'QuestionsController@store');
+Route::post('/question/{id?}', 'QuestionsController@store');
 
 Auth::routes();
 

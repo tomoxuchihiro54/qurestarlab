@@ -1,0 +1,17 @@
+header {
+    position: fixed; /* 固定 */
+    top: 0; /* 一番上に表示 */
+    width: 100%; /* 中央に表示 */
+}
+
+.ly-q-area {
+    overflow: auto; /* スクロールする範囲を制御 */
+    margin: 0 auto;
+    padding: 100px 0; /* コンテンツ上下にスペース */
+}
+
+.ly-answer-area {
+    position: fixed; /* 固定 */
+    bottom: 0; /* 一番下に表示 */
+    width: 100%; /* 中央に表示 */
+}
