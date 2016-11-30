@@ -12,8 +12,8 @@ class UserAnswerDetail extends Model
   public function userAnswer() {
     return $this->belongsTo('App\UserAnswer');
   }
-  // question_choecesテーブルとリレーション（逆）
-  public function questionChoice() {
-    return $this->belongsTo('App\QuestionChoice');
+  // questionテーブルとリレーション（逆）
+  public function question() {
+    return $this->belongsTo('App\Question');
   }
 }

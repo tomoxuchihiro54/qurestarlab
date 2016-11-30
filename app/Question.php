@@ -12,4 +12,9 @@ class Question extends Model
   public function questionChoices() {
     return $this->hasMany('App\QuestionChoice');
   }
+  
+  // user_answer_detailsテーブルとリレーション
+  public function userAnswerDetails() {
+    return $this->hasMany('App\UserAnswerDetail');
+  }
 }

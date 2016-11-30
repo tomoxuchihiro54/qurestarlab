@@ -8,24 +8,29 @@ use App\Http\Requests;
 use App\Question;
 use App\QuestionChoice;
 use App\UserAnswer;
+use App\UserAnswerDetail;
 use DB;
 
 class ResultsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // 解答結果の表示
-    public function index()
+    // 全体の結果を表示
+    public function display_result()
     {
+      // questionsテーブルの情報をすべて取得
       $questions = Question::all();
-      foreach($questions as $question) {
-        // 総問題数
-        $question_num = count($question->id);
-        $user_correct = count($question->)
-      }
+      // 総問題数の取得
+      $question_num = $questions->count();
+      // 最新のID指定でuser_answerテーブルの情報取得
+      $u_ans = UserAnswer::orderBy('id', 'desc')->limit(1)->first();
+      
+      // 正解した割合
+      $u_ans_rate = UserAnswerDetail::where('user_answer_id', $u_ans->id)
+                      ->where('correct_flag', '=', 1)->count() / $question_num * 100;
+      return view('questions.result')
+        ->with('questions', $questions)
+        ->with('question_num', $question_num)
+        ->with('u_ans', $u_ans)
+        ->with('u_ans_rate', $u_ans_rate);
     }
 
     /**

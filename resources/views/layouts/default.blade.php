@@ -30,6 +30,7 @@
     <!-- メインコンテンツ -end-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./base/js/utility.min.js"></script>
+    <script src="/base/js/utility.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   </body>
 </html>

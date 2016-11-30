@@ -22,15 +22,18 @@ class QuestionsController extends Controller
     public function index($id = 1)
     {
       try {
-        $user_ans = new UserAnswer();
-        $user_ans->user_id = 1;
-        $user_ans->save();
+        if ($id = 1) {
+          $user_ans = new UserAnswer();
+          $user_ans->user_id = 1;
+          $user_ans->save();
+        }
       } catch (Exception $ex) {
         Session::flash('flash_message', 'データベースエラー');
       }
       // questionテーブルの最初のレコードを取得
       $question = Question::findOrFail($id);
-      return view('questions.question')->with('question', $question);
+      return view('questions.question')
+        ->with('question', $question);
     }
 
     /**
@@ -53,15 +56,8 @@ class QuestionsController extends Controller
     {
       
       try {
-        // IDをもとにquestionsテーブルの情報取得
-        $question = Question::findOrFail($id);
         // 現在表示されている問題のIDをもとにquestionsテーブルの情報取得
-        $now_question = Question::Where('id', '<', $id)->orderBy('id', 'desc')->limit('1')->first();
-        
-        // idがない場合は結果ページへ
-        if (!$question) {
-          return view('questions.result');
-        }
+        $now_question = Question::Where('id', '<', $id)->orderBy('id', 'desc')->limit(1)->first();
         
         // 最新のIDをもとにユーザアンサーテーブルの情報取得
         $new_user_ans = UserAnswer::orderBy('id', 'desc')->limit(1)->first();
@@ -72,9 +68,19 @@ class QuestionsController extends Controller
         // 問題ID
         $user_ans_det->question_id = $now_question->id;
         // 正解フラグ
-        $user_ans_det->correct_flag = $request->correct_flag;
+        $question_choice = QuestionChoice::where('id', $request->choice_id)->first();
+        
+        $user_ans_det->correct_flag = $question_choice->correct_flag;
         // user_answers_detailsテーブルに情報を登録
         $user_ans_det->save();
+        
+        // 登録問題数を越えたら結果ページへ
+        if ($id > Question::all()->count()) {
+          return redirect('/question/result');
+        }
+        
+        // IDをもとにquestionsテーブルの情報取得
+        $question = Question::findOrFail($id);
         
       } catch (Exception $ex) {
         Session::flash('flash_message', 'データベースエラー');

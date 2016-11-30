@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class QuestionChoice extends Model
 {
   
-  protected $fillable = ['question_id', 'text', 'correct_flag'];
+  protected $fillable = ['question_id', 'text', 'correct_flag', 'sort'];
   // questionsテーブルとリレーション（逆）
   public function question() {
     return $this->belongsTo('App\Question');
   }
   
-  // user_answer_detailsテーブルとリレーション
-  public function userAnswerDetails() {
-    return $this->hasMany('App\UserAnswerDetail');
-  }
 }

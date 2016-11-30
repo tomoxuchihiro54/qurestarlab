@@ -1,17 +1,109 @@
 header {
+    background-color: #fff;
     position: fixed; /* 固定 */
     top: 0; /* 一番上に表示 */
     width: 100%; /* 中央に表示 */
+    text-align: center;
+}
+
+.ly-logo {
+    margin: 0;
+}
+
+.ly-inline {
+    display: inline-block;
 }
 
 .ly-q-area {
     overflow: auto; /* スクロールする範囲を制御 */
     margin: 0 auto;
-    padding: 100px 0; /* コンテンツ上下にスペース */
+    padding: 40px 0 100px; /* コンテンツ上下にスペース */
 }
 
 .ly-answer-area {
+    background-color: #fff;
     position: fixed; /* 固定 */
+    left: 0;
     bottom: 0; /* 一番下に表示 */
+    padding: 10px;
     width: 100%; /* 中央に表示 */
+    height: 100px;
+}
+
+@media screen and (max-width: 767px) {
+    .ly-answer-area {
+        height: 150px;
+    }
+    
+    .ly-q-area {
+        padding: 40px 0 150px; /* コンテンツ上下にスペース */
+    }
+}
+
+.ly-ans-btn-group {
+    margin: 0 0 10px 20px;
+}
+/* ラベルのスタイル　*/
+.ly-ans-btn-group label {
+    padding-left: 38px;	/* ラベルの位置 */
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+}
+
+/* ボックスのスタイル */
+.ly-ans-btn-group label:before {
+    content: '';
+    width: 20px;	/* ボックスの横幅 */
+    height: 20px;	/* ボックスの縦幅 */
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    background-color: #fff;
+    box-shadow: inset 1px 2px 3px 0px #000;
+    border-radius: 6px 6px 6px 6px;
+}
+/* 元のラジオボックスを表示しない */
+.ly-ans-btn-group input[type=radio] {
+    display: none;
+}
+/* チェックした時のスタイル */
+.ly-ans-btn-group input[type=radio]:checked + label:before {
+    content: '\2713';		/* チェックの文字 */ 
+    font-size: 22px;		/* チェックのサイズ */
+    color: #fff;		/* チェックの色 */
+    background-color: #06f;	/* チェックした時の色 */
+}
+
+/*-------------------------------------------------
+結果画面
+---------------------------------------------------*/
+
+.ly-result-area {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 0;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 1200px) {
+    .ly-result-area {
+        font-size: 24px;
+    }
+}
+
+.ly-correct-area:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.btn-group-lg>.btn, .btn-2x {
+    padding: 14px 60px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
 }

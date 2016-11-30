@@ -16,9 +16,11 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-// 最初の１問
+// 結果ページの表示
+Route::get('/question/result', 'ResultsController@display_result');
+// 最初問題の表示
 Route::get('/question/{id?}', 'QuestionsController@index');
-Route::post('/question/{id?}', 'QuestionsController@store');
+Route::any('/question/{id}', 'QuestionsController@store');
 
 Auth::routes();
 
