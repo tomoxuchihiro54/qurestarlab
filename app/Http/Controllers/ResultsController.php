@@ -18,18 +18,21 @@ class ResultsController extends Controller
     {
       // questionsテーブルの情報をすべて取得
       $questions = Question::all();
-      // 総問題数の取得
-      $question_num = $questions->count();
+      
       // 最新のID指定でuser_answerテーブルの情報取得
       $u_ans = UserAnswer::orderBy('id', 'desc')->limit(1)->first();
       
+      // 正解した問題数
+      $correct_num = UserAnswerDetail::where('user_answer_id', $u_ans->id)
+                      ->where('correct_flag', '=', 1)->count();
+      
       // 正解した割合
-      $u_ans_rate = UserAnswerDetail::where('user_answer_id', $u_ans->id)
-                      ->where('correct_flag', '=', 1)->count() / $question_num * 100;
+      $u_ans_rate = $correct_num / $questions->count() * 100;
+      
       return view('questions.result')
         ->with('questions', $questions)
-        ->with('question_num', $question_num)
         ->with('u_ans', $u_ans)
+        ->with('correct_num', $correct_num)
         ->with('u_ans_rate', $u_ans_rate);
     }
 

@@ -22,6 +22,8 @@ Route::get('/question/result', 'ResultsController@display_result');
 Route::get('/question/{id?}', 'QuestionsController@index');
 Route::any('/question/{id}', 'QuestionsController@store');
 
+Route::get('/question/result_rate', 'RatesController@index');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

@@ -8,6 +8,10 @@
         <link href="/base/css/styles.min.css" rel="stylesheet">
         <link href="/base/css/font-awesome.min.css" rel="stylesheet">
         <link href="/css/layouts.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/base/js/utility.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     </head>
   <body>
     <!--ナビゲーションバー -start -->
@@ -28,9 +32,6 @@
         @yield('content')
     </div>
     <!-- メインコンテンツ -end-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/base/js/utility.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    @yield('jq_area')
   </body>
 </html>

@@ -67,11 +67,14 @@ class QuestionsController extends Controller
         $user_ans_det->user_answer_id = $new_user_ans->id;
         // 問題ID
         $user_ans_det->question_id = $now_question->id;
-        // 正解フラグ
-        $question_choice = QuestionChoice::where('id', $request->choice_id)->first();
         
+        // ラジオボタン送られたIDのもとにquestion_choicesテーブルの情報を取得
+        $question_choice = QuestionChoice::where('id', $request->choice_id)->first();
+        // 正解フラグ
         $user_ans_det->correct_flag = $question_choice->correct_flag;
-        // user_answers_detailsテーブルに情報を登録
+        // 選択した選択肢番号
+        $user_ans_det ->sort_id = $question_choice->sort;
+        // 上記情報をuser_answers_detailsテーブルに情報を登録
         $user_ans_det->save();
         
         // 登録問題数を越えたら結果ページへ

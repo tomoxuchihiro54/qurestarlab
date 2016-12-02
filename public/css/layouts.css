@@ -101,6 +101,12 @@ header {
     clear: both;
 }
 
+.ly-result-choice:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 .btn-group-lg>.btn, .btn-2x {
     padding: 14px 60px;
     font-size: 18px;
