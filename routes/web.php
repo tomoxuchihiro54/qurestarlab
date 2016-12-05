@@ -13,23 +13,26 @@
 
 
 Route::get('/', function () {
-  return view('welcome');
+  $add_class = 'ly-top-page';
+  return view('top')->with('add_class', $add_class);
 });
+
+Auth::routes();
 
 // 結果ページの表示
 Route::get('/question/result', 'ResultsController@display_result');
+
+// 回数別結果ページの表示
+Route::get('/dashboard/answer_history/{id}', 'AnswerHistoriesController@show');
+
 // 最初問題の表示
 Route::get('/question/{id?}', 'QuestionsController@index');
 Route::any('/question/{id}', 'QuestionsController@store');
 
-Route::get('/question/result_rate', 'RatesController@index');
+// ダッシュボードページの表示
+Route::get('/dashboard', 'DashboardsController@index');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-Auth::routes();
+// 解答結果履歴ページの表示
+Route::get('/dashboard/answer_history', 'AnswerHistoriesController@index');
 
 Route::get('/home', 'HomeController@index');
-
-

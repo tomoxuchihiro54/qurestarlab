@@ -22,7 +22,7 @@
         <ul class="list-group">
           <li class="list-group-item">
             <span class="text-left">合計点</span>
-            <span class="text-right">{{ $count }}点/{{ $questions->sum('point') }}点</span>
+            <span class="text-right">/{{ $questions->sum('point') }}点</span>
           </li>
           <!-- ▼全体の正答状況▼ -->
           <li class="ly-correct-area list-group-item">
@@ -98,7 +98,7 @@
           @endforeach
         </ul>
         <div class="ly-next-link text-center">
-          <a href="{{ url('/dashboard') }}" class="btn btn-success btn-block">次へ</a>
+          <a href="{{ url('/dashboard') }}" class="btn btn-success btn-2x">次へ</a>
         </div>
       </div>
     </div>

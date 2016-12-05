@@ -13,6 +13,17 @@ use DB;
 
 class QuestionsController extends Controller
 {
+  
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +35,7 @@ class QuestionsController extends Controller
       try {
         if ($id = 1) {
           $user_ans = new UserAnswer();
-          $user_ans->user_id = 1;
+          $user_ans->user_id = \Auth::user()->id;
           $user_ans->save();
         }
       } catch (Exception $ex) {
@@ -37,16 +48,6 @@ class QuestionsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -54,13 +55,12 @@ class QuestionsController extends Controller
      */
     public function store(Request $request, $id)
     {
-      
       try {
         // 現在表示されている問題のIDをもとにquestionsテーブルの情報取得
         $now_question = Question::Where('id', '<', $id)->orderBy('id', 'desc')->limit(1)->first();
         
         // 最新のIDをもとにユーザアンサーテーブルの情報取得
-        $new_user_ans = UserAnswer::orderBy('id', 'desc')->limit(1)->first();
+        $new_user_ans = UserAnswer::where('user_id', \Auth::user()->id)->orderBy('id', 'desc')->limit(1)->first();
         // user_answers_detailsテーブルに情報を登録を宣言
         $user_ans_det = new UserAnswerDetail();        // ユーザIDを１に固定
         // ユーザー解答ID
@@ -73,15 +73,16 @@ class QuestionsController extends Controller
         // 正解フラグ
         $user_ans_det->correct_flag = $question_choice->correct_flag;
         // 選択した選択肢番号
-        $user_ans_det ->sort_id = $question_choice->sort;
+        $user_ans_det->sort_id = $question_choice->sort;
+        // 解くまでにかかった時間
+        $user_ans_det->time = $request->counter;
         // 上記情報をuser_answers_detailsテーブルに情報を登録
         $user_ans_det->save();
         
         // 登録問題数を越えたら結果ページへ
         if ($id > Question::all()->count()) {
-          return redirect('/question/result');
+          return response()->json(false);
         }
-        
         // IDをもとにquestionsテーブルの情報取得
         $question = Question::findOrFail($id);
         
@@ -89,7 +90,7 @@ class QuestionsController extends Controller
         Session::flash('flash_message', 'データベースエラー');
       }
       
-      return view('questions.question')->with('question', $question);
+        return view('questions.question')->with('question', $question);
     }
 
     /**

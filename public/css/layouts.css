@@ -1,23 +1,136 @@
+html {
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+html > .container {
+    height: 100%;
+}
+
+body > .container {
+    height: 100%;
+}
+
+body.ly-top-page {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 100px;
+}
+
+i {
+    padding-left: 8px;
+}
+
 header {
     background-color: #fff;
+    
+}
+
+header.ly-main-cont {
+    background: #fff;
+    z-index: 10;
     position: fixed; /* 固定 */
+    height: 50px;
     top: 0; /* 一番上に表示 */
     width: 100%; /* 中央に表示 */
     text-align: center;
+}
+
+
+
+.ly-top-logo {
+    margin: 0;
+    width: 200px;
 }
 
 .ly-logo {
     margin: 0;
 }
 
+.navbar-brand {
+    padding: 0;
+}
+
+/*----------------------------------------------------
+トップ画面
+------------------------------------------------------*/
+.ly-top-container {
+    display: table;
+    padding-top: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    height: auto !important;
+}
+.ly-top-container {
+    background-image: url(/images/top-main.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.ly-top-content-in {
+    max-width: 1170px;;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+    padding: 90px 0;
+    margin: auto;
+}
+
+.pd-top-20 {
+    padding-top: 20px;
+}
+
 .ly-inline {
     display: inline-block;
 }
 
+/*--------------------------------------------
+問題画面
+---------------------------------------------*/
+
+/*ラジオボタン*/
+.ly-answer-area input[type="radio"] {
+    display: none;
+}
+
+label.ly-q-btn{
+    position: relative;
+    background-color: #4169e1;
+    border-radius: 4px;
+    color: #fff;
+    padding: 5px 20px;
+    margin: 15px;
+    line-height: 52px;
+    -webkit-transition: none;
+    transition: none;
+    box-shadow: 0 3px 0 #0000cd;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+}
+
+label.ly-q-btn:hover {
+	top: -4px;
+	box-shadow: 0 7px 0 #0000cd;
+}
+label.ly-q-btn:active {
+	top: 3px;
+	box-shadow: none;
+}
+
+
 .ly-q-area {
     overflow: auto; /* スクロールする範囲を制御 */
     margin: 0 auto;
-    padding: 40px 0 100px; /* コンテンツ上下にスペース */
+    padding: 50px 0 100px; /* コンテンツ上下にスペース */
+    font-size: 16px;
 }
 
 .ly-answer-area {
@@ -27,12 +140,12 @@ header {
     bottom: 0; /* 一番下に表示 */
     padding: 10px;
     width: 100%; /* 中央に表示 */
-    height: 100px;
+    height: 190px;
 }
 
 @media screen and (max-width: 767px) {
     .ly-answer-area {
-        height: 150px;
+        height: 256px;
     }
     
     .ly-q-area {
@@ -43,40 +156,6 @@ header {
 .ly-ans-btn-group {
     margin: 0 0 10px 20px;
 }
-/* ラベルのスタイル　*/
-.ly-ans-btn-group label {
-    padding-left: 38px;	/* ラベルの位置 */
-    margin-bottom: 10px;
-    font-size: 20px;
-    line-height: 20px;
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
-}
-
-/* ボックスのスタイル */
-.ly-ans-btn-group label:before {
-    content: '';
-    width: 20px;	/* ボックスの横幅 */
-    height: 20px;	/* ボックスの縦幅 */
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    background-color: #fff;
-    box-shadow: inset 1px 2px 3px 0px #000;
-    border-radius: 6px 6px 6px 6px;
-}
-/* 元のラジオボックスを表示しない */
-.ly-ans-btn-group input[type=radio] {
-    display: none;
-}
-/* チェックした時のスタイル */
-.ly-ans-btn-group input[type=radio]:checked + label:before {
-    content: '\2713';		/* チェックの文字 */ 
-    font-size: 22px;		/* チェックのサイズ */
-    color: #fff;		/* チェックの色 */
-    background-color: #06f;	/* チェックした時の色 */
-}
 
 /*-------------------------------------------------
 結果画面
@@ -85,7 +164,7 @@ header {
 .ly-result-area {
     max-width: 640px;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 60px 0;
     font-size: 24px;
 }
 
@@ -112,4 +191,194 @@ header {
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 6px;
+}
+
+.carousel-control span {
+    color: #000;
+}
+
+.carousel-control.left {
+    background: none;
+}
+
+.carousel-control.right {
+    background: none;
+}
+
+/*---------------------------------------
+ダッシュボード
+----------------------------------------*/
+.ly-dashboard-area {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.ly-dashboard-area .col-sm-12,
+.ly-dashboard-area .col-xs-12,
+.ly-dashboard-area .col-sm-6,
+.ly-dashboard-area .col-xs-6 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ly-dashboard-area:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*プロフィール画像*/
+.ly-cool-up-form {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100px;
+    filter: alpha(opacity = 0);
+    opacity: 0;
+    z-index: 3;
+    cursor: pointer;
+}
+
+#ly-upload-btn {
+    display: none;
+}
+
+.ly-cool-up {
+    display: table;
+    position: relative;
+    overflow: hidden;
+}
+
+.ly-photo-area {
+    display: table-cell;
+    height: 100px;
+    width: 100px;
+    border: 4px solid #000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ly-q-tit-block {
+    border-bottom: 1px solid #ccc;
+}
+
+.ly-ans-block {
+    border-right: 1px solid #ccc;
+}
+
+.ly-q-tit-block {
+    padding: 15px 0;
+}
+
+.ly-q-tit-block,
+.ly-ans-block,
+.ly-trands-block {
+    text-align: center;
+}
+
+.ly-ans-block a,
+.ly-trands-block a {
+    display: block;
+    padding: 15px 0;
+    color: #000;
+    font-size: 22px;
+}
+
+.ly-ans-block a:hover,
+.ly-trands-block a:hover {
+    text-decoration: none;
+    background: #cdcdcd;
+}
+
+.ly-ans-block img,
+.ly-trands-block img {
+    margin-bottom: 20px;
+}
+
+.ly-tit-img {
+    max-width: 120px;
+    max-height: 120px;
+    padding: 20px;
+   
+}
+
+.ly-db-img {
+    width: 55%;
+}
+
+.ly-tit-img-clr {
+    background: #87cefa;
+    color: #fff;
+}
+
+.ly-btn-q {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 18px;
+}
+
+/*---------------------------------------
+解答結果履歴ページ
+----------------------------------------*/
+
+.ly-solving-num {
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 0;
+    border: none;
+}
+
+.ly-main-page .ly-ans-history-area .panel {
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    -webkit-transition: box-shadow .4s ease-in-out;
+    -moz-transition: box-shadow .4s ease-in-out;
+    -ms-transition: box-shadow .4s ease-in-out;
+    -o-transition: box-shadow .4s ease-in-out;
+    transition: box-shadow .4s ease-in-out;
+}
+
+.ly-main-page .ly-ans-history-area .panel-heading {
+    padding: 0;
+    border-radius: 0;
+}
+
+.ly-main-page .ly-ans-history-area .panel-heading a {
+    padding: 20px;
+    display: block;
+}
+
+.ly-ans-history-num {
+    font-size: 14px;
+    color: rgba(0,0,0,0.55);
+}
+
+.ly-ans-history-tit {
+    font-size: 18px;
+    font-weight: 600;
+    display: -webkit-box !important;
+    display: -moz-box !important;
+    display: box !important;
+    -webkit-line-clamp: 2;
+    -moz-line-clamp: 2;
+    -ms-line-clamp: 2;
+    -o-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-box-orient: vertical;
+    -o-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(0,0,0,0.55);
+}
+
+
+/*-----------------------------------
+その他
+------------------------------------*/
+.fs-30 {
+    font-size: 30px;
 }
