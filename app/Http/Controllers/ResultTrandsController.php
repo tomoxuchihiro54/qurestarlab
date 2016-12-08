@@ -9,21 +9,11 @@ use App\Question;
 use App\QuestionChoice;
 use App\UserAnswer;
 use App\UserAnswerDetail;
-
+use App\UserTotalPoint;
 use DB;
 
-class DashboardsController extends Controller
+class ResultTrandsController extends Controller
 {
-  
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +21,21 @@ class DashboardsController extends Controller
      */
     public function index()
     {
-      return view('dashboards.dashboard');
+      // ログインユーザー別にuser_answersテーブルの情報を取得
+      $u_answers = UserAnswer::where('user_id', \Auth::user()->id)->get();
+      
+      // ログインユーザーかつcorrect_flagが1のuser_answer_detailsテーブルの情報取得
+      $u_ans_det = UserAnswerDetail::where('user_answer_id', \Auth::user()->id)
+                      ->where('correct_flag', '=', 1)->get();
+      
+      // ログインしているユーザー別にuser_total_pointsテーブルの情報を取得
+      $u_total_points = UserTotalPoint::where('user_id', \Auth::user()->id)->get();
+      
+      return view('histories.resultTrand')
+        ->with('u_answers', $u_answers)
+        ->with('u_ans_det', $u_ans_det)
+        ->with('u_total_points', $u_total_points);
+      
     }
 
     /**
@@ -52,6 +56,7 @@ class DashboardsController extends Controller
      */
     public function store(Request $request)
     {
+        //
     }
 
     /**
@@ -62,7 +67,7 @@ class DashboardsController extends Controller
      */
     public function show($id)
     {
-      
+        //
     }
 
     /**

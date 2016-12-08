@@ -69,37 +69,10 @@
 
 @section('content')
 <div class="container">
-  <div class="ly-ans-history-area">
-    <div class="col-sm-12 col-xs-12">
-      @forelse ($u_answers as $u_ans)
-      <div class="panel ly-solving">
-        <div class="panel-heading">
-          <a href="{{ url('/dashboard/answer_history',$u_ans->id) }}">
-            <div class="ly-ans-history-num">
-              第{{ $u_ans->num_times }}回
-            </div>
-              <div class="ly-ans-history-tit">
-                平成28年 憲法 短答式問題
-              </div>
-          </a>
-        </div>
-      </div>
-      @empty
-      <div class="ly-not-ans-history">表示できる解答結果がありません</div>
-      @endforelse
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+    <div class="ly-q-box">
+      
     </div>
-  </div>
-  <div class="col-sm-12 col-xs-12">
-    <a href="{{ url('/dashboard') }}" class="btn btn-success btn-block ly-btn-q">ダッシュボードへ</a>
   </div>
 </div>
-@endsection
-@section('footer')
-<footer>
-  <div class="footer_in">
-    <div class="copyright">
-        Copyright&copy;Tomohiro Horiuchi All Right Reserved.
-    </div>
-  </div>
-</footer>
 @endsection

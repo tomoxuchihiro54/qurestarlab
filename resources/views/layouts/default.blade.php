@@ -22,7 +22,7 @@
         </script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="/base/js/utility.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script src="/js/jquery.pjax.js"></script>
         <script src="/js/jquery.serialize-hash.js"></script>
         @yield('include_script')
@@ -37,6 +37,7 @@
     <!--ナビゲーションバー -end -->
     @yield('content')
     <!-- メインコンテンツ -end-->
+    @yield('footer')
     @yield('jq_area')
   <script src="/js/question.pjax.js"></script>
   </body>

@@ -9,6 +9,7 @@ use App\Question;
 use App\QuestionChoice;
 use App\UserAnswer;
 use App\UserAnswerDetail;
+use App\UserTotalPoint;
 use DB;
 
 class QuestionsController extends Controller
@@ -33,9 +34,18 @@ class QuestionsController extends Controller
     public function index($id = 1)
     {
       try {
+        
         if ($id = 1) {
+          // ログインユーザーを指定してuser_answersテーブルの情報取得
+          $recode = UserAnswer::where('user_id', \Auth::user()->id)->first();
+          // user_answersテーブルにデータをインサート
           $user_ans = new UserAnswer();
           $user_ans->user_id = \Auth::user()->id;
+          if (!$recode) {
+            $user_ans->num_times = 1;
+          } else {
+            $user_ans->num_times = $recode->max('num_times') + 1;
+          }
           $user_ans->save();
         }
       } catch (Exception $ex) {
@@ -58,11 +68,10 @@ class QuestionsController extends Controller
       try {
         // 現在表示されている問題のIDをもとにquestionsテーブルの情報取得
         $now_question = Question::Where('id', '<', $id)->orderBy('id', 'desc')->limit(1)->first();
-        
         // 最新のIDをもとにユーザアンサーテーブルの情報取得
         $new_user_ans = UserAnswer::where('user_id', \Auth::user()->id)->orderBy('id', 'desc')->limit(1)->first();
         // user_answers_detailsテーブルに情報を登録を宣言
-        $user_ans_det = new UserAnswerDetail();        // ユーザIDを１に固定
+        $user_ans_det = new UserAnswerDetail();
         // ユーザー解答ID
         $user_ans_det->user_answer_id = $new_user_ans->id;
         // 問題ID
@@ -78,7 +87,7 @@ class QuestionsController extends Controller
         $user_ans_det->time = $request->counter;
         // 上記情報をuser_answers_detailsテーブルに情報を登録
         $user_ans_det->save();
-        
+         
         // 登録問題数を越えたら結果ページへ
         if ($id > Question::all()->count()) {
           return response()->json(false);
@@ -87,54 +96,9 @@ class QuestionsController extends Controller
         $question = Question::findOrFail($id);
         
       } catch (Exception $ex) {
-        Session::flash('flash_message', 'データベースエラー');
+        Session::flash('message', 'データベースエラー'); 
       }
       
         return view('questions.question')->with('question', $question);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

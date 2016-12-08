@@ -1,9 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'ダッシュボード')
+@section('title', '平成28年度短答式問題（憲法）| 解答結果')
 
 @section('header_nav')
-
 <!-- ヘッダー -start -->
 <nav class="navbar navbar-default navbar-static-top">
   <div class="container">
@@ -69,28 +68,13 @@
 
 @section('content')
 <div class="container">
-  <div class="ly-ans-history-area">
-    <div class="col-sm-12 col-xs-12">
-      @forelse ($u_answers as $u_ans)
-      <div class="panel ly-solving">
-        <div class="panel-heading">
-          <a href="{{ url('/dashboard/answer_history',$u_ans->id) }}">
-            <div class="ly-ans-history-num">
-              第{{ $u_ans->num_times }}回
-            </div>
-              <div class="ly-ans-history-tit">
-                平成28年 憲法 短答式問題
-              </div>
-          </a>
-        </div>
-      </div>
-      @empty
-      <div class="ly-not-ans-history">表示できる解答結果がありません</div>
-      @endforelse
-    </div>
-  </div>
   <div class="col-sm-12 col-xs-12">
-    <a href="{{ url('/dashboard') }}" class="btn btn-success btn-block ly-btn-q">ダッシュボードへ</a>
+    <div class="ly-graph-area">
+      <canvas id="line_graph" height="200" width="400"></canvas>
+      <div class="col-sm-12 col-xs-12">
+        <a href="{{ url('/dashboard') }}" class="btn btn-success btn-block ly-btn-q">ダッシュボードへ</a>
+      </div>
+    </div>
   </div>
 </div>
 @endsection
@@ -102,4 +86,61 @@
     </div>
   </div>
 </footer>
+@endsection
+@section('jq_area')
+<script>
+//折れ線グラフ
+var ctx = document.getElementById("line_graph");
+var myLineChart = new Chart(ctx, {
+  //グラフの種類
+  type: 'line',
+  //データの設定
+  data: {
+      //データ項目のラベル
+      labels: [
+      <?php $length = count($u_answers); ?>
+      <?php $no = 0 ?>
+      @foreach($u_answers as $u_ans)
+        '第{{ $u_ans->num_times }}回'
+        <?php $no++ ?>
+        {{ $no != $length ? ',' : '' }}
+      @endforeach
+      ],
+      //データセット
+      datasets: [{
+          //凡例
+          label: "得点推移",
+          //背景色
+          backgroundColor: "rgba(75,192,192,0.4)",
+          //枠線の色
+          borderColor: "rgba(75,192,192,1)",
+          //グラフのデータ
+          data: [
+            <?php $length = count($u_total_points); ?>
+            <?php $no = 0 ?>
+            @foreach($u_total_points as $u_total_point)
+              '{{ $u_total_point->total_point }}'
+              <?php $no++ ?>
+              {{$no != $length ? ',' : '' }}
+            @endforeach
+          ]
+      }]
+  },
+  //オプションの設定
+  options: {
+      responsive: true,
+      scales: {
+          //縦軸の設定
+          yAxes: [{
+              ticks: {
+                  //最小値を0にする
+                  beginAtZero: true,
+                  min: 0,
+                  max: 10
+              }
+          }]
+      }
+  }
+});
+</script>
 @endsection

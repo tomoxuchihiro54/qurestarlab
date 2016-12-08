@@ -35,4 +35,7 @@ Route::get('/dashboard', 'DashboardsController@index');
 // 解答結果履歴ページの表示
 Route::get('/dashboard/answer_history', 'AnswerHistoriesController@index');
 
+// 成績推移ページの表示
+Route::get('/dashboard/result_trands', 'ResultTrandsController@index');
+
 Route::get('/home', 'HomeController@index');

@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function userAnswers() {
       return $this->hasMany('App\UserAnswer');
     }
+    
+    public function userTotalPoints() {
+      return $this->hasMany('App\UserTotalPoint');
+    }
 }

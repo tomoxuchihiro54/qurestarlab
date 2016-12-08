@@ -9,6 +9,7 @@ use App\Question;
 use App\QuestionChoice;
 use App\UserAnswer;
 use App\UserAnswerDetail;
+use App\UserTotalPoint;
 use DB;
 
 class AnswerHistoriesController extends Controller
@@ -49,17 +50,6 @@ class AnswerHistoriesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -72,8 +62,8 @@ class AnswerHistoriesController extends Controller
       
       $u_ans = UserAnswer::where('id', $id)->first();
       
-      //
-      $u_ans_det = UserAnswerDetail::with('question')->where('user_answer_id', $id)
+      // 問題
+      $u_ans_det = UserAnswerDetail::where('user_answer_id', $id)
                       ->where('correct_flag', '=', 1)->get();
       
       $count = 0;
@@ -86,12 +76,47 @@ class AnswerHistoriesController extends Controller
       // 正解した割合
       $u_ans_rate = $correct_num / $questions->count() * 100;
       
+      try {
+        $data = UserTotalPoint::where('user_answer_id', $id)->first();
+        if (!$data) {
+          // user_total_pointsテーブルに得点を登録する宣言
+        $u_total_p = new UserTotalPoint();
+        //　ユーザーID
+        $u_total_p->user_id = $u_ans->user_id;
+        // アンサーID
+        $u_total_p->user_answer_id = $u_ans->id;
+        // 得点
+        $count = 0;
+        foreach ($u_ans_det as $a) {
+          $count += $a->question->point;
+        }
+        $u_total_p->total_point = $count;
+        // 登録
+        $u_total_p->save();
+          return redirect('/dashboard/answer_history/'.$id);
+        }
+      } catch (Exception $ex) {
+         Session::flash('message', 'データベースエラー');
+      }
+      
       return view('questions.result')
         ->with('questions', $questions)
         ->with('u_ans', $u_ans)
         ->with('count', $count)
         ->with('correct_num', $correct_num)
         ->with('u_ans_rate', $u_ans_rate);
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    // 成績登録
+    public function store(Request $request, $id)
+    {
+     
     }
 
     /**

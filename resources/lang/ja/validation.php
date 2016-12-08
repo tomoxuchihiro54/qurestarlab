@@ -33,7 +33,7 @@ return [
     'digits_between'       => ':attributeは:min〜:max桁にしてください。',
     'email'                => ':attributeを正しいメールアドレスにしてください。',
     'filled'               => ':attributeは必須です。',
-    'exists'               => '選択された:attributeは正しくありません。',
+    'exists'               => 'attributeはすでに登録されております',
     'image'                => ':attributeは画像にしてください。',
     'in'                   => '選択された:attributeは正しくありません。',
     'integer'              => ':attributeは整数にしてください。',
@@ -97,10 +97,6 @@ return [
     |
     */
     'attributes' => [
-        'name' => '商品名',
-        'price' => '値段',
-        'stock' => '在庫数',
-        'img' => '商品画像',
-        'status' => 'ステータス',
+        'total_point' => '成績',
     ],
 ];

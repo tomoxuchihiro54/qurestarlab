@@ -80,7 +80,7 @@
     <!-- ▼解答結果▼ -->
     <!-- ▼成長率▼ -->
     <div class="col-sm-6 col-xs-6 ly-trands-block">
-    <a href="#">
+    <a href="{{ url('/dashboard/result_trands') }}">
       <img class="ly-db-img" src="/images/d-line-graph.png">
       <p class="text-center">成績推移</p>
     </a>
@@ -88,15 +88,16 @@
     <!-- ▲成長率▲ -->
   </div>
   <div class="col-sm-12 col-xs-12">
-    <a href="{{ url('/question') }}" class="btn btn-success btn-block ly-btn-q">再び解く</a>
+    <a href="{{ url('/question') }}" class="btn btn-success btn-block ly-btn-q">問題ページへ</a>
   </div>
 </div>
 @endsection
-@section('jq_area')
-<script>
-$(function () {
-  $('#ly-up-prof-file').change(function () {
-    $('#ly-upload-btn').click();
-  });
-});
-</script>
+@section('footer')
+<footer>
+  <div class="footer_in">
+    <div class="copyright">
+        Copyright&copy;Tomohiro Horiuchi All Right Reserved.
+    </div>
+  </div>
+</footer>
+@endsection

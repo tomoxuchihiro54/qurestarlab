@@ -1,4 +1,4 @@
-count = 0; //カウントの初期値
+var count = 0; //カウントの初期値
 timerID = setInterval('countup()',1000); //1秒毎にcountup()を呼び出し
 
 function countup() {
@@ -9,3 +9,4 @@ function countup() {
 function countReset() {
   count = 0;
 }
+

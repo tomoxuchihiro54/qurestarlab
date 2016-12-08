@@ -124,3 +124,12 @@
     </div>
 </div>
 @endsection
+@section('footer')
+<footer>
+  <div class="footer_in">
+    <div class="copyright">
+        Copyright&copy;Tomohiro Horiuchi All Right Reserved.
+    </div>
+  </div>
+</footer>
+@endsection
