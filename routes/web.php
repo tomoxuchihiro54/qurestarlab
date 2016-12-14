@@ -12,10 +12,9 @@
 
 
 
-Route::get('/', function () {
-  $add_class = 'ly-top-page';
-  return view('top')->with('add_class', $add_class);
-});
+
+
+Route::get('/', 'TopsController@index');
 
 Auth::routes();
 

@@ -1,25 +1,21 @@
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
+html {
+    min-height: 100%;
+    position: relative;
 }
 
-html,
-body,
-div.container {
-  height: 100%;
+body {
+    margin-bottom: 4em;
 }
 
 nav {
     border-bottom: solid 1px #ddd;
 }
 
-body.ly-top-page {
+/*body.ly-top-page {
     position: relative;
     min-height: 100%;
     padding-bottom: 100px;
-}
+}*/
 
 header {
     background-color: #fff;
@@ -146,46 +142,24 @@ header.ly-main-cont {
 /*====================================
 フッター
 ====================================*/
-
+ooter {
+    
+}
 footer {
-  clear: both;
-  width: 100%;
-  border-top: 1px solid #ccc;
+    bottom: 0;
+    height: 4em;
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid #ccc;
 }
 
 .footer_in {
   width: 600px;
+  height: 100%;
   margin: 0 auto;
+  padding: 15px 0 10px;
   text-align: center;
 }
-
-.footer_in ul li {
-  display: inline-block;
-  border-right: 1px solid rgb(1, 0, 58);
-}
-
-.footer_in ul li:last-child {
-  border: none;
-}
-
-.footer_in ul li a {
-  display: block;
-  padding: 0 10px;
-  color: #000;
-}
-
-.footer_in ul li a:hover {
-  color: #00bbff;
-}
-
-.ft_menu {
-  padding: 15px 0;
-}
-
-.copyright {
-  padding-bottom: 15px;
-}
-
 
 /*--------------------------------------------
 問題画面
@@ -223,7 +197,7 @@ label.ly-q-btn:active {
 .ly-q-area {
     overflow: auto; /* スクロールする範囲を制御 */
     margin: 0 auto;
-    margin: 50px 0 190px;
+    margin: 58px 0 190px;
     font-size: 16px;
 }
 
@@ -297,6 +271,10 @@ label.ly-q-btn:active {
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 6px;
+}
+
+.ly-next-link {
+    margin-bottom: 15px;
 }
 
 .carousel-control span {
@@ -462,6 +440,14 @@ label.ly-q-btn:active {
 }
 
 /*-----------------------------------
+成績推移
+------------------------------------*/
+.ly-404 .ly-text-404  {
+    font-size: 36px;
+    color: #0000cd;
+}
+
+/*-----------------------------------
 その他
 ------------------------------------*/
 .fs-30 {
@@ -469,5 +455,5 @@ label.ly-q-btn:active {
 }
 
 i {
-  padding-right: 8px;
+  padding: 0 8px;
 }

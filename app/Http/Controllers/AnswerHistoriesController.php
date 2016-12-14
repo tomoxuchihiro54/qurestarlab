@@ -36,17 +36,8 @@ class AnswerHistoriesController extends Controller
       // ログインユーザー別にuser_answersテーブルの情報を取得
       $u_answers = UserAnswer::where('user_id', \Auth::user()->id)->get();
       
-      return view('histories.answerHistory')->with('u_answers', $u_answers);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+      return view('histories.answerHistory')
+        ->with('u_answers', $u_answers);
     }
 
     /**
@@ -76,27 +67,9 @@ class AnswerHistoriesController extends Controller
       // 正解した割合
       $u_ans_rate = $correct_num / $questions->count() * 100;
       
-      try {
-        $data = UserTotalPoint::where('user_answer_id', $id)->first();
-        if (!$data) {
-          // user_total_pointsテーブルに得点を登録する宣言
-        $u_total_p = new UserTotalPoint();
-        //　ユーザーID
-        $u_total_p->user_id = $u_ans->user_id;
-        // アンサーID
-        $u_total_p->user_answer_id = $u_ans->id;
-        // 得点
-        $count = 0;
-        foreach ($u_ans_det as $a) {
-          $count += $a->question->point;
-        }
-        $u_total_p->total_point = $count;
-        // 登録
-        $u_total_p->save();
-          return redirect('/dashboard/answer_history/'.$id);
-        }
-      } catch (Exception $ex) {
-         Session::flash('message', 'データベースエラー');
+      $count = 0;
+      foreach ($u_ans_det as $a) {
+        $count += $a->question->point;
       }
       
       return view('questions.result')
@@ -107,49 +80,4 @@ class AnswerHistoriesController extends Controller
         ->with('u_ans_rate', $u_ans_rate);
     }
     
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // 成績登録
-    public function store(Request $request, $id)
-    {
-     
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

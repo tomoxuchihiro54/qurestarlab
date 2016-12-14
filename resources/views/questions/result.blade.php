@@ -125,7 +125,11 @@
           @endforeach
         </ul>
         <div class="ly-re-solve">
+          @if (isset($data))
           <a href="{{ url('/question') }}" class="btn btn-default btn-block ly-btn-q">再び解く</a>
+          @else
+          <a href="{{ url('/dashboard/answer_history') }}" class="btn btn-default btn-block ly-btn-q">一覧へ戻る</a>
+          @endif
         </div>
         <div class="ly-next-link">
           <a href="{{ url('/dashboard') }}" class="btn btn-success btn-block ly-btn-q">次へ</a>
@@ -134,6 +138,15 @@
     </div>
   </div>
 </div>
+@endsection
+@section('footer')
+<footer>
+  <div class="footer_in">
+    <div class="copyright">
+        Copyright&copy;Tomohiro Horiuchi All Right Reserved.
+    </div>
+  </div>
+</footer>
 @endsection
 @section('jq_area')
 <script>

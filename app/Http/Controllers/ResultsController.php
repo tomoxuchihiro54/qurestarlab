@@ -30,15 +30,45 @@ class ResultsController extends Controller
     {
       // questionsテーブルの情報をすべて取得
       $questions = Question::all();
+      // 最新のID指定でuser_answerテーブルの情報取得
+      $u_ans = UserAnswer::where('user_id', \Auth::user()->id)->orderBy('id', 'desc')->limit(1)->first();
+      //ログイン者のID、かつcorrect_flagが1指定でuser_answer_detailsテーブルの情報を取得
+      $u_ans_det = UserAnswerDetail::with('question')->where('user_answer_id', $u_ans->id)
+                      ->where('correct_flag', '=', 1)->get();
+      // 得点の保存
+      $this->store_total_point();
+      // 解答ID指定のもと、user_total_pointsテーブルの情報を取得
+      $data = UserTotalPoint::where('user_answer_id', $u_ans->id)->first();
+      
+      $count = 0;
+      foreach ($u_ans_det as $a) {
+        $count += $a->question->point;
+      }
+      
+      $correct_num = $u_ans_det->count();
+      
+      // 正解した割合
+      $u_ans_rate = $correct_num / $questions->count() * 100;
+      
+      return view('questions.result')
+        ->with('questions', $questions)
+        ->with('u_ans', $u_ans)
+        ->with('count', $count)
+        ->with('correct_num', $correct_num)
+        ->with('data', $data)
+        ->with('u_ans_rate', $u_ans_rate);
+    }
+    
+    protected function store_total_point() {
       
       // 最新のID指定でuser_answerテーブルの情報取得
       $u_ans = UserAnswer::where('user_id', \Auth::user()->id)->orderBy('id', 'desc')->limit(1)->first();
-      
-      //
+      // 解答ID、かつcorrect_flagが1指定でuser_answer_detailsテーブルの情報を取得
       $u_ans_det = UserAnswerDetail::with('question')->where('user_answer_id', $u_ans->id)
                       ->where('correct_flag', '=', 1)->get();
       
       try {
+        // 解答ID指定のもと、user_total_pointsテーブルの情報を取得
         $data = UserTotalPoint::where('user_answer_id', $u_ans->id)->first();
         if (!$data) {
           // user_total_pointsテーブルに得点を登録する宣言
@@ -61,23 +91,7 @@ class ResultsController extends Controller
          Session::flash('message', 'データベースエラー');
       }
       
-      $count = 0;
-      foreach ($u_ans_det as $a) {
-        $count += $a->question->point;
-      }
-      
-      $correct_num = $u_ans_det->count();
-      
-      // 正解した割合
-      $u_ans_rate = $correct_num / $questions->count() * 100;
-      
-      return view('questions.result')
-        ->with('questions', $questions)
-        ->with('u_ans', $u_ans)
-        ->with('count', $count)
-        ->with('correct_num', $correct_num)
-        ->with('data', $data)
-        ->with('u_ans_rate', $u_ans_rate);
+      return $data;
     }
     
 }
